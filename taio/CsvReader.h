@@ -7,6 +7,7 @@ using namespace std;
 
 class CsvReader
 {
+private:
 	string fileName;
 	char delimeter;
 
@@ -18,6 +19,4 @@ public:
 
 private:
 	vector<string> split(string line);
-	string trim(string line, size_t startPos, size_t length);
 };
-

@@ -33,9 +33,7 @@ vector<string> CsvReader::split(string line)
 		if (line[i] == delimeter)
 		{
 			if (i == startPos)
-			{
 				splitedLine.push_back("");
-			}
 			else
 			{
 				string nextWord = line.substr(startPos, i - startPos);
@@ -51,22 +49,4 @@ vector<string> CsvReader::split(string line)
 	}
 
 	return splitedLine;
-}
-
-string CsvReader::trim(string line, size_t startPos, size_t length)
-{
-	string word = line.substr(startPos, length);
-
-	char space = ' ';
-
-	int firstNonSpacePos = -1;
-	while (word[++firstNonSpacePos] == space);
-
-	int lastNonSpacePos = word.length();
-	while (word[--lastNonSpacePos] == space);
-
-	if (firstNonSpacePos > lastNonSpacePos)
-		throw "Empty Word";
-
-	return word.substr(firstNonSpacePos, lastNonSpacePos - firstNonSpacePos + 1);
 }
