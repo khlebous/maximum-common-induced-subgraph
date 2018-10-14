@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-
+#include "Graph.h"
 using namespace std;
 
 class Parser
@@ -13,6 +13,9 @@ private:
 
 public:
 	vector<vector<bool>> parseToBool(vector<vector<string>> const data);
+	Graph parseToGraph(vector<vector<bool>> const data);
+
+	bool canParseToGraph(vector<vector<bool>> const data);
 
 private:
 	bool parseToBool(string s);
