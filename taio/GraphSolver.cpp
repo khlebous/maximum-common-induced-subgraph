@@ -2,41 +2,78 @@
 
 using namespace std;
 
-GraphSolver::GraphSolver()
-{
-}
 
 
 GraphSolver::~GraphSolver()
 {
 }
 
-
-
-Graph GraphSolver::getSubGraph(Graph const G, vector<int> vertices)
+Graph GraphSolver::getSubMaxGraph()
 {
-	throw logic_error("not implemented exception");
+	size_t vertCount = Xmax.size();
+	bool** edges = new bool*[vertCount - 1];
+
+	for (size_t i = 1; i < vertCount; i++)
+	{
+		edges[i - 1] = new bool[i];
+
+		for (size_t j = 0; j < i; j++)
+			edges[i - 1][j] = _G.edge(Xmax[i], Xmax[j]);
+	}
+
+	return Graph(vertCount, edges);
 }
 
-bool GraphSolver::checkAdjecencyMatrices(Graph const G, vector<int> X, int x, Graph const H, vector<int> Y, int y)
+bool GraphSolver::checkAdjecencyMatrices(int x, int y)
 {
-	throw logic_error("not implemented exception");
+	for (size_t i = 0; i < X.size(); i++)
+	{
+		if (_G.edge(X[i], x) != _G.edge(Y[i], y))
+			return false;
+	}
+
+	return true;
 }
 
-bool GraphSolver::checkConnectivity(Graph const G, vector<int> X, int x)
+bool GraphSolver::checkConnectivity(int x)
 {
-	throw logic_error("not implemented exception");
+	for (auto& v : X)
+	{
+		if (_G.edge(v, x))
+			return true;
+	}
+
+	return false;
 }
 
-Graph GraphSolver::Solve(Graph const G, Graph const H)
+void GraphSolver::updateMaxSequences()
 {
-	vector<int> X;
-	vector<int> Y;
+	if (X.size() > Xmax.size())
+	{
+		//surprisingly it is a deep copy
+		Xmax = X;
+		Ymax = Y;
+	}
+}
 
-	//loops or recurrence?
-	//i think recurrence
+void GraphSolver::init()
+{
+	//just to be sure or to relauch solving
+	X.clear();
+	Y.clear();
+	Xmax.clear();
+	Ymax.clear();
+}
 
-	Graph result = getSubGraph(G, X);
+Graph GraphSolver::Solve()
+{
+	init();
+
+	X.push_back(2);
+	X.push_back(3);
+
+	Graph result = getSubMaxGraph();
+
 	return result;
 }
 

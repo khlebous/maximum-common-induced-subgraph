@@ -13,7 +13,7 @@ Graph::~Graph()
 bool Graph::edge(int i, int j)
 {
 	if (i >= vertCount || j >= vertCount || i < 0 || j < 0)
-		throw std::invalid_argument("invalid edge index");
+		throw invalid_argument("invalid edge index");
 
 	if (i == j)
 		return false;
