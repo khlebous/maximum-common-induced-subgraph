@@ -37,7 +37,12 @@ int main()
 	result->printEdges();
 	result->print();
 
+	Graph* approxResult = solver.approxSolve();
+	approxResult->printEdges();
+	approxResult->print();
+
 	delete result;
+	delete approxResult;
 
 	system("pause");
 	return 0;
