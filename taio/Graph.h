@@ -14,5 +14,6 @@ public:
 	size_t verticesCount() { return vertCount; }
 	bool edge(int i, int j);
 	void print();
+	void printEdges();
 };
 

@@ -1,14 +1,15 @@
+#include <iostream>
+
 #include "GraphSolver.h"
 
 using namespace std;
-
 
 
 GraphSolver::~GraphSolver()
 {
 }
 
-Graph GraphSolver::getSubMaxGraph()
+Graph* GraphSolver::getMaxSubGraph()
 {
 	size_t vertCount = Xmax.size();
 	bool** edges = new bool*[vertCount - 1];
@@ -18,17 +19,20 @@ Graph GraphSolver::getSubMaxGraph()
 		edges[i - 1] = new bool[i];
 
 		for (size_t j = 0; j < i; j++)
-			edges[i - 1][j] = _G.edge(Xmax[i], Xmax[j]);
+			edges[i - 1][j] = _G->edge(Xmax[i], Ymax[j]);
 	}
 
-	return Graph(vertCount, edges);
+	return new Graph(vertCount, edges);
 }
 
-bool GraphSolver::checkAdjecencyMatrices(int x, int y)
+bool GraphSolver::checkAdjecencyMatrices(int y)
 {
-	for (size_t i = 0; i < X.size(); i++)
+	int n = X.size();
+	int x = X[n - 1]; //last added x; |X| = |Y| + 1
+
+	for (size_t i = 0; i < n - 1; i++)
 	{
-		if (_G.edge(X[i], x) != _G.edge(Y[i], y))
+		if (_G->edge(X[i], x) != _H->edge(Y[i], y))
 			return false;
 	}
 
@@ -39,7 +43,7 @@ bool GraphSolver::checkConnectivity(int x)
 {
 	for (auto& v : X)
 	{
-		if (_G.edge(v, x))
+		if (_G->edge(v, x))
 			return true;
 	}
 
@@ -56,6 +60,10 @@ void GraphSolver::updateMaxSequences()
 	}
 }
 
+bool GraphSolver::contains(vector<int> v, int el) {
+	return find(v.begin(), v.end(), el) != v.end();
+}
+
 void GraphSolver::init()
 {
 	//just to be sure or to relauch solving
@@ -65,16 +73,78 @@ void GraphSolver::init()
 	Ymax.clear();
 }
 
-Graph GraphSolver::Solve()
+Graph* GraphSolver::solve()
 {
 	init();
 
-	X.push_back(2);
-	X.push_back(3);
+	int n = _G->verticesCount();
+	for (size_t i = 0; i < n; i++)
+	{
+		X.push_back(i);
+		printSequences();
+		solveXNode();
+		X.pop_back();
+	}
 
-	Graph result = getSubMaxGraph();
+	Graph* result = getMaxSubGraph();
 
 	return result;
+}
+
+void GraphSolver::solveRYNode() {
+
+	int n = _G->verticesCount();
+	for (size_t i = 0; i < n; i++)
+	{
+		if (contains(X, i))
+			continue;
+
+		if (checkConnectivity(i)) {
+			X.push_back(i);
+			printSequences();
+			solveXNode();
+			X.pop_back();
+		}
+	}
+}
+
+void GraphSolver::solveXNode() {
+
+	int n = _H->verticesCount();
+	for (size_t i = 0; i < n; i++)
+	{
+		if (contains(Y, i))
+			continue;
+
+		if (checkAdjecencyMatrices(i)) {
+			Y.push_back(i);
+			printSequences();
+			updateMaxSequences(); // where should it be?
+			solveRYNode();
+			Y.pop_back();
+		}
+	}
+}
+
+void GraphSolver::printSequences()
+{
+	cout << "X=(";
+	for (auto& v : X)
+	{
+		cout << v;
+		if (v != X.back())
+			cout << " , ";
+	}
+	cout << ")" << endl;
+
+	cout << "Y=(";
+	for (auto& v : Y)
+	{
+		cout << v;
+		if (v != Y.back())
+			cout << " , ";
+	}
+	cout << ")" << endl << endl;
 }
 
 

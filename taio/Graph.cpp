@@ -21,7 +21,20 @@ bool Graph::edge(int i, int j)
 	return i < j ? edges[j - 1][i] : edges[i - 1][j];
 }
 
+
 void Graph::print()
+{
+	cout << "Vertices count: " << vertCount << endl;
+	cout << "Adjecency matrix: " << endl;
+	for (size_t i = 0; i < vertCount; i++)
+	{
+		for (size_t j = 0; j < vertCount; j++)
+			cout << edge(i, j) << ' ';
+		cout << endl;
+	}
+}
+
+void Graph::printEdges()
 {
 	cout << "Vertices count: " << vertCount << endl;
 	cout << "Edges representation: " << endl;

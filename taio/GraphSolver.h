@@ -8,24 +8,28 @@ using namespace std;
 class GraphSolver
 {
 private:
-	Graph getSubMaxGraph();
-	bool checkAdjecencyMatrices(int x, int y);
+	Graph* getMaxSubGraph();
+	bool checkAdjecencyMatrices(int y);
 	bool checkConnectivity(int x);
 	void updateMaxSequences();
+	bool contains(vector<int> v, int el);
 	void init();
+	void solveRYNode();
+	void solveXNode();
+	void printSequences();
 
-	Graph _G;
-	Graph _H;
+	Graph* _G;
+	Graph* _H;
 	vector<int> X;
 	vector<int> Y;
 	vector<int> Xmax;
-	vector<int> Ymax; // it appears to be useless
+	vector<int> Ymax;
 
 public:
-	GraphSolver(Graph G, Graph H)
-		: _G(G), _H(H){}
+	GraphSolver(Graph* G, Graph* H)
+		: _G(G), _H(H) {}
 	~GraphSolver();
 
-	Graph Solve();
+	Graph* solve();
 };
 

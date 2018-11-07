@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 #include "CsvReader.h"
 #include "Parser.h"
+#include "GraphSolver.h"
 
 using namespace std;
 
@@ -24,16 +26,19 @@ int main()
 	cout << endl;
 
 	Graph graph = parser.parseToGraph(graphB);
-	graph.print();
+	graph.printEdges();
 	cout << endl;
 
 	cout << "Test edge function:" << endl;
-	for (size_t i = 0; i < graph.verticesCount(); i++)
-	{
-		for (size_t j = 0; j < graph.verticesCount(); j++)
-			cout << graph.edge(i, j) << " ";
-		cout << endl;
-	}
+	graph.print();
 
+	GraphSolver solver = GraphSolver(&graph, &graph);
+	Graph* result = solver.solve();
+	result->printEdges();
+	result->print();
+
+	delete result;
+
+	system("pause");
 	return 0;
 }
