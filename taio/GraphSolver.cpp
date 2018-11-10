@@ -9,7 +9,7 @@ GraphSolver::~GraphSolver()
 {
 }
 
-Graph* GraphSolver::solve()
+Graph* GraphSolver::solve(vector<int>* g, vector<int>* h)
 {
 	init();
 
@@ -17,11 +17,13 @@ Graph* GraphSolver::solve()
 	for (size_t i = 0; i < n; i++)
 	{
 		X.push_back(i);
-		printSequences();
 		solveXNode();
 		X.pop_back();
 	}
 
+	sortMaxSequences();
+	g->assign(Xmax.begin(), Xmax.end());
+	h->assign(Ymax.begin(), Ymax.end());
 	Graph* result = getMaxSubGraph();
 
 	return result;
@@ -37,7 +39,6 @@ void GraphSolver::solveXNode() {
 
 		if (checkAdjecencyMatrices(i)) {
 			Y.push_back(i);
-			printSequences();
 			updateMaxSequences(); // where should it be?
 			solveYNode();
 			Y.pop_back();
@@ -55,14 +56,13 @@ void GraphSolver::solveYNode() {
 
 		if (checkConnectivity(i)) {
 			X.push_back(i);
-			printSequences();
 			solveXNode();
 			X.pop_back();
 		}
 	}
 }
 
-Graph * GraphSolver::approxSolve()
+Graph * GraphSolver::approxSolve(vector<int>* g, vector<int>* h)
 {
 	init();
 	int n = _G->verticesCount();
@@ -71,12 +71,10 @@ Graph * GraphSolver::approxSolve()
 	for (size_t i = 0; i < n; i++)
 	{
 		X.push_back(i);
-		printSequences();
 		for (size_t j = 0; j < m; j++)
 		{
 			Y.push_back(j);
 			updateMaxSequences();
-			printSequences();
 			approxSolveXNode();
 
 			Y.pop_back();
@@ -84,6 +82,9 @@ Graph * GraphSolver::approxSolve()
 		X.pop_back();
 	}
 
+	sortMaxSequences();
+	g->assign(Xmax.begin(), Xmax.end());
+	h->assign(Ymax.begin(), Ymax.end());
 	Graph* result = getMaxSubGraph();
 
 	return result;
@@ -101,7 +102,6 @@ void GraphSolver::approxSolveXNode()
 
 		if (checkConnectivity(i)) {
 			X.push_back(i);
-			printSequences();
 			foundAndSearched = approxSolveYNode();
 			X.pop_back();
 
@@ -122,7 +122,6 @@ bool GraphSolver::approxSolveYNode()
 
 		if (checkAdjecencyMatrices(i)) {
 			Y.push_back(i);
-			printSequences();
 			updateMaxSequences(); // where should it be?
 			approxSolveXNode();
 			Y.pop_back();
@@ -141,11 +140,11 @@ void GraphSolver::init()
 	Xmax.clear();
 	Ymax.clear();
 }
+
 void GraphSolver::updateMaxSequences()
 {
 	if (X.size() > Xmax.size())
 	{
-		//surprisingly it is a deep copy
 		Xmax = X;
 		Ymax = Y;
 	}
@@ -190,7 +189,7 @@ Graph* GraphSolver::getMaxSubGraph()
 		edges[i - 1] = new bool[i];
 
 		for (size_t j = 0; j < i; j++)
-			edges[i - 1][j] = _G->edge(Xmax[i], Ymax[j]);
+			edges[i - 1][j] = _G->edge(Xmax[i], Ymax[i]);
 	}
 
 	return new Graph(vertCount, edges);
@@ -215,6 +214,31 @@ void GraphSolver::printSequences()
 			cout << " , ";
 	}
 	cout << ")" << endl << endl;
+}
+
+void GraphSolver::sortMaxSequences()
+{
+	int n = Xmax.size();
+	int m = Ymax.size();
+	int tmp;
+
+	for (size_t i = 0; i < n - 1; i++)
+	{
+		for (size_t j = 0; j < m - i - 1; j++)
+		{
+			if (Xmax[j] > Xmax[j+1])
+			{
+				tmp = Xmax[j];
+				Xmax[j] = Xmax[j + 1];
+				Xmax[j + 1] = tmp;
+
+				tmp = Ymax[j];
+				Ymax[j] = Ymax[j + 1];
+				Ymax[j + 1] = tmp;
+			}
+		}
+	}
+
 }
 
 
