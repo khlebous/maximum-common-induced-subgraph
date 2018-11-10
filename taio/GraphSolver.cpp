@@ -1,13 +1,6 @@
 #include <iostream>
-
 #include "GraphSolver.h"
-
 using namespace std;
-
-
-GraphSolver::~GraphSolver()
-{
-}
 
 Graph* GraphSolver::solve(vector<int>* g, vector<int>* h)
 {
@@ -29,8 +22,8 @@ Graph* GraphSolver::solve(vector<int>* g, vector<int>* h)
 	return result;
 }
 
-void GraphSolver::solveXNode() {
-
+void GraphSolver::solveXNode() 
+{
 	int n = _H->verticesCount();
 	for (size_t i = 0; i < n; i++)
 	{
@@ -46,8 +39,8 @@ void GraphSolver::solveXNode() {
 	}
 }
 
-void GraphSolver::solveYNode() {
-
+void GraphSolver::solveYNode() 
+{
 	int n = _G->verticesCount();
 	for (size_t i = 0; i < n; i++)
 	{
@@ -175,7 +168,8 @@ bool GraphSolver::checkConnectivity(int x)
 	return false;
 }
 
-bool GraphSolver::contains(vector<int> v, int el) {
+bool GraphSolver::contains(vector<int> v, int el) 
+{
 	return find(v.begin(), v.end(), el) != v.end();
 }
 
@@ -238,11 +232,4 @@ void GraphSolver::sortMaxSequences()
 			}
 		}
 	}
-
 }
-
-
-
-
-
-

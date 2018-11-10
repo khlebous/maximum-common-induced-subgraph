@@ -1,5 +1,4 @@
 #include "CsvReader.h"
-
 #include <fstream>
 #include <string>
 #include <algorithm>

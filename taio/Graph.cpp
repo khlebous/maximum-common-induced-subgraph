@@ -21,7 +21,6 @@ bool Graph::edge(int i, int j)
 	return i < j ? edges[j - 1][i] : edges[i - 1][j];
 }
 
-
 void Graph::print()
 {
 	cout << "Vertices count: " << vertCount << endl;

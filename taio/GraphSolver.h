@@ -1,6 +1,4 @@
 #pragma once
-#pragma once
-
 #include "Graph.h"
 #include <vector>
 using namespace std;
@@ -29,9 +27,8 @@ private:
 	Graph* getMaxSubGraph();
 
 public:
-	GraphSolver(Graph* G, Graph* H)
-		: _G(G), _H(H) {}
-	~GraphSolver();
+	GraphSolver(Graph* G, Graph* H): _G(G), _H(H) {}
+	~GraphSolver() {}
 
 	Graph* solve(vector<int>* g, vector<int>* h);
 	Graph * approxSolve(vector<int>* g, vector<int>* h);
