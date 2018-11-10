@@ -25,6 +25,7 @@ private:
 	bool checkConnectivity(int x);
 	bool contains(vector<int> v, int el);
 	void printSequences();
+	void sortMaxSequences();
 	Graph* getMaxSubGraph();
 
 public:
@@ -32,7 +33,7 @@ public:
 		: _G(G), _H(H) {}
 	~GraphSolver();
 
-	Graph* solve();
-	Graph * approxSolve();
+	Graph* solve(vector<int>* g, vector<int>* h);
+	Graph * approxSolve(vector<int>* g, vector<int>* h);
 };
 
