@@ -12,7 +12,7 @@ public:
 	~Graph();
 
 	size_t verticesCount() { return vertCount; }
-	bool edge(int i, int j);
+	bool edge(size_t i, size_t j);
 	void print();
 	void printEdges();
 };

@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <string>
 #include <chrono>
-
 #include "CsvReader.h"
 #include "Parser.h"
 #include "GraphSolver.h"
@@ -12,11 +11,12 @@ using namespace std;
 void printDuration(std::chrono::duration<double> elapsed);
 void printSequences(vector<int> X, vector<int> Y);
 
+const string exNr = "1";
+
 int main(int argc, char* argv[])
 {
-	string pathG = "CSVs/GraphG.txt";
-	string pathH = "CSVs/GraphH.txt";
-
+	string pathH = "CSVs/ex" + exNr + "_g.csv";
+	string pathG = "CSVs/ex" + exNr + "_h.csv";
 	if (argc == 3)
 	{
 		pathG = argv[1];
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 		cout << "Wrong graph G" << endl;
 		return 0;
 	}
-	Graph graphG = parser.parseToGraph(dataG);
+	Graph* graphG = parser.parseToGraph(dataG);
 
 	CsvReader csvReaderH = CsvReader(pathH);
 	vector<vector<bool>> dataH = parser.parseToBool(csvReaderH.getData());
@@ -39,9 +39,10 @@ int main(int argc, char* argv[])
 		cout << "Wrong graph H" << endl;
 		return 0;
 	}
-	Graph graphH = parser.parseToGraph(dataH);
+	Graph* graphH = parser.parseToGraph(dataH);
 
-	GraphSolver solver = GraphSolver(&graphG, &graphH);
+	GraphSolver solver = GraphSolver(graphG, graphH);
+
 	vector<int> g;
 	vector<int> h;
 
@@ -61,7 +62,10 @@ int main(int argc, char* argv[])
 	printSequences(g, h);
 	delete approxResult;
 
-	system("pause");
+	delete graphG;
+	delete graphH;
+
+	//system("pause");
 	return 0;
 }
 

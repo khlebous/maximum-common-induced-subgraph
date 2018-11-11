@@ -7,7 +7,7 @@ Graph* GraphSolver::solve(vector<int>* g, vector<int>* h)
 {
 	init();
 
-	int n = _G->verticesCount();
+	size_t n = _G->verticesCount();
 	for (size_t i = 0; i < n; i++)
 	{
 		X.push_back(i);
@@ -25,7 +25,7 @@ Graph* GraphSolver::solve(vector<int>* g, vector<int>* h)
 
 void GraphSolver::solveXNode() 
 {
-	int n = _H->verticesCount();
+	size_t n = _H->verticesCount();
 	for (size_t i = 0; i < n; i++)
 	{
 		if (contains(Y, i))
@@ -43,7 +43,7 @@ void GraphSolver::solveXNode()
 
 void GraphSolver::solveYNode() 
 {
-	int n = _G->verticesCount();
+	size_t n = _G->verticesCount();
 	for (size_t i = 0; i < n; i++)
 	{
 		if (contains(X, i))
@@ -60,8 +60,8 @@ void GraphSolver::solveYNode()
 Graph * GraphSolver::approxSolve(vector<int>* g, vector<int>* h)
 {
 	init();
-	int n = _G->verticesCount();
-	int m = _H->verticesCount();
+	size_t n = _G->verticesCount();
+	size_t m = _H->verticesCount();
 
 	for (size_t i = 0; i < n; i++)
 	{
@@ -88,7 +88,7 @@ Graph * GraphSolver::approxSolve(vector<int>* g, vector<int>* h)
 
 void GraphSolver::approxSolveXNode()
 {
-	int n = _G->verticesCount();
+	size_t n = _G->verticesCount();
 	bool foundAndSearched = false;
 
 	for (size_t i = 0; i < n; i++)
@@ -109,7 +109,7 @@ void GraphSolver::approxSolveXNode()
 
 bool GraphSolver::approxSolveYNode()
 {
-	int m = _H->verticesCount();
+	size_t m = _H->verticesCount();
 
 	for (size_t i = 0; i < m; i++)
 	{
@@ -151,9 +151,9 @@ bool GraphSolver::updateMaxSequences()
 	return foundMax;
 }
 
-bool GraphSolver::checkAdjecencyMatrices(int y)
+bool GraphSolver::checkAdjecencyMatrices(size_t y)
 {
-	int n = X.size();
+	size_t n = X.size();
 	int x = X[n - 1]; //last added x; |X| = |Y| + 1
 
 	for (size_t i = 0; i < n - 1; i++)
@@ -165,7 +165,7 @@ bool GraphSolver::checkAdjecencyMatrices(int y)
 	return true;
 }
 
-bool GraphSolver::checkConnectivity(int x)
+bool GraphSolver::checkConnectivity(size_t x)
 {
 	for (auto& v : X)
 	{
@@ -176,7 +176,7 @@ bool GraphSolver::checkConnectivity(int x)
 	return false;
 }
 
-bool GraphSolver::contains(vector<int> v, int el) 
+bool GraphSolver::contains(vector<size_t> v, size_t el) 
 {
 	return find(v.begin(), v.end(), el) != v.end();
 }
@@ -220,8 +220,8 @@ void GraphSolver::printSequences()
 
 void GraphSolver::sortMaxSequences()
 {
-	int n = Xmax.size();
-	int m = Ymax.size();
+	size_t n = Xmax.size();
+	size_t m = Ymax.size();
 
 	for (size_t i = 0; i < n - 1; i++)
 	{
