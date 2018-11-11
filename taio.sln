@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "taio", "taio\taio.vcxproj", "{CD961E6A-EC83-4EDD-8E43-5F81E81533FF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxproj", "{651592FD-7F1D-420D-BCA3-10185C26CD12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{CD961E6A-EC83-4EDD-8E43-5F81E81533FF}.Release|x64.Build.0 = Release|x64
 		{CD961E6A-EC83-4EDD-8E43-5F81E81533FF}.Release|x86.ActiveCfg = Release|Win32
 		{CD961E6A-EC83-4EDD-8E43-5F81E81533FF}.Release|x86.Build.0 = Release|Win32
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Debug|x64.ActiveCfg = Debug|x64
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Debug|x64.Build.0 = Debug|x64
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Debug|x86.ActiveCfg = Debug|Win32
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Debug|x86.Build.0 = Debug|Win32
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Release|x64.ActiveCfg = Release|x64
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Release|x64.Build.0 = Release|x64
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Release|x86.ActiveCfg = Release|Win32
+		{651592FD-7F1D-420D-BCA3-10185C26CD12}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

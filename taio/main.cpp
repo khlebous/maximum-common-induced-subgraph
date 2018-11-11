@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <string>
 #include <chrono>
-
 #include "CsvReader.h"
 #include "Parser.h"
 #include "GraphSolver.h"
@@ -12,11 +11,12 @@ using namespace std;
 void printDuration(std::chrono::duration<double> elapsed);
 void printSequences(vector<int> X, vector<int> Y);
 
+const string exNr = "1";
+
 int main(int argc, char* argv[])
 {
-	string pathG = "CSVs/GraphG.txt";
-	string pathH = "CSVs/GraphH.txt";
-
+	string pathH = "CSVs/ex" + exNr + "_g.csv";
+	string pathG = "CSVs/ex" + exNr + "_h.csv";
 	if (argc == 3)
 	{
 		pathG = argv[1];
