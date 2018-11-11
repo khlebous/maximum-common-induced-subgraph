@@ -8,10 +8,10 @@ class GraphSolver
 private:
 	Graph* _G;
 	Graph* _H;
-	vector<int> X;
-	vector<int> Y;
-	vector<int> Xmax;
-	vector<int> Ymax;
+	vector<size_t> X;
+	vector<size_t> Y;
+	vector<size_t> Xmax;
+	vector<size_t> Ymax;
 
 	void init();
 	void solveYNode();
@@ -19,9 +19,9 @@ private:
 	void approxSolveXNode();
 	bool approxSolveYNode();
 	bool updateMaxSequences();
-	bool checkAdjecencyMatrices(int y);
-	bool checkConnectivity(int x);
-	bool contains(vector<int> v, int el);
+	bool checkAdjecencyMatrices(size_t y);
+	bool checkConnectivity(size_t x);
+	bool contains(vector<size_t> v, size_t el);
 	void printSequences();
 	void sortMaxSequences();
 	Graph* getMaxSubGraph();

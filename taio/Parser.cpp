@@ -20,7 +20,7 @@ vector<vector<bool>> Parser::parseToBool(vector<vector<string>> const data)
 	return outData;
 }
 
-Graph Parser::parseToGraph(vector<vector<bool>> const data)
+Graph* Parser::parseToGraph(vector<vector<bool>> const data)
 {
 	size_t vertCount = data.size();
 	bool** edges = new bool*[vertCount - 1];
@@ -33,7 +33,7 @@ Graph Parser::parseToGraph(vector<vector<bool>> const data)
 			edges[i - 1][j] = data[i][j];
 	}
 
-	return Graph(vertCount, edges);
+	return new Graph(vertCount, edges);
 }
 
 bool Parser::canParseToGraph(vector<vector<bool>> const data)

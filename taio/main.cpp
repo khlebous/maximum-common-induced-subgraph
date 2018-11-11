@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 		cout << "Wrong graph G" << endl;
 		return 0;
 	}
-	Graph graphG = parser.parseToGraph(dataG);
+	Graph* graphG = parser.parseToGraph(dataG);
 
 	CsvReader csvReaderH = CsvReader(pathH);
 	vector<vector<bool>> dataH = parser.parseToBool(csvReaderH.getData());
@@ -39,9 +39,10 @@ int main(int argc, char* argv[])
 		cout << "Wrong graph H" << endl;
 		return 0;
 	}
-	Graph graphH = parser.parseToGraph(dataH);
+	Graph* graphH = parser.parseToGraph(dataH);
 
-	GraphSolver solver = GraphSolver(&graphG, &graphH);
+	GraphSolver solver = GraphSolver(graphG, graphH);
+
 	vector<int> g;
 	vector<int> h;
 
@@ -61,7 +62,10 @@ int main(int argc, char* argv[])
 	printSequences(g, h);
 	delete approxResult;
 
-	system("pause");
+	delete graphG;
+	delete graphH;
+
+	//system("pause");
 	return 0;
 }
 
