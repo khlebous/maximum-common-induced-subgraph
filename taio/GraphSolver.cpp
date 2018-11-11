@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "GraphSolver.h"
 using namespace std;
 
@@ -32,7 +33,8 @@ void GraphSolver::solveXNode()
 
 		if (checkAdjecencyMatrices(i)) {
 			Y.push_back(i);
-			updateMaxSequences(); // where should it be?
+			if (updateMaxSequences())
+				break;
 			solveYNode();
 			Y.pop_back();
 		}
@@ -67,7 +69,8 @@ Graph * GraphSolver::approxSolve(vector<int>* g, vector<int>* h)
 		for (size_t j = 0; j < m; j++)
 		{
 			Y.push_back(j);
-			updateMaxSequences();
+			if (updateMaxSequences())
+				break;
 			approxSolveXNode();
 
 			Y.pop_back();
@@ -115,7 +118,8 @@ bool GraphSolver::approxSolveYNode()
 
 		if (checkAdjecencyMatrices(i)) {
 			Y.push_back(i);
-			updateMaxSequences(); // where should it be?
+			if (updateMaxSequences())
+				break;
 			approxSolveXNode();
 			Y.pop_back();
 			return true;
@@ -134,13 +138,17 @@ void GraphSolver::init()
 	Ymax.clear();
 }
 
-void GraphSolver::updateMaxSequences()
+
+bool GraphSolver::updateMaxSequences()
 {
 	if (X.size() > Xmax.size())
 	{
 		Xmax = X;
 		Ymax = Y;
 	}
+
+	bool foundMax = Xmax.size() == _G->verticesCount() || Ymax.size() == _H->verticesCount();
+	return foundMax;
 }
 
 bool GraphSolver::checkAdjecencyMatrices(int y)
@@ -214,7 +222,6 @@ void GraphSolver::sortMaxSequences()
 {
 	int n = Xmax.size();
 	int m = Ymax.size();
-	int tmp;
 
 	for (size_t i = 0; i < n - 1; i++)
 	{
@@ -222,14 +229,10 @@ void GraphSolver::sortMaxSequences()
 		{
 			if (Xmax[j] > Xmax[j+1])
 			{
-				tmp = Xmax[j];
-				Xmax[j] = Xmax[j + 1];
-				Xmax[j + 1] = tmp;
-
-				tmp = Ymax[j];
-				Ymax[j] = Ymax[j + 1];
-				Ymax[j + 1] = tmp;
+				swap(Xmax[j], Xmax[j + 1]);
+				swap(Ymax[j], Ymax[j + 1]);
 			}
 		}
 	}
+
 }

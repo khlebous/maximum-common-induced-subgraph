@@ -18,7 +18,7 @@ private:
 	void solveXNode();
 	void approxSolveXNode();
 	bool approxSolveYNode();
-	void updateMaxSequences();
+	bool updateMaxSequences();
 	bool checkAdjecencyMatrices(int y);
 	bool checkConnectivity(int x);
 	bool contains(vector<int> v, int el);
