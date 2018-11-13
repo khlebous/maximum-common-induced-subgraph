@@ -6,6 +6,7 @@
 #include "CsvReader.h"
 #include "Parser.h"
 #include "GraphSolver.h"
+
 using namespace std;
 
 void printDuration(std::chrono::duration<double> elapsed);
@@ -65,7 +66,7 @@ int main(int argc, char* argv[])
 	delete graphG;
 	delete graphH;
 
-	//system("pause");
+	system("pause");
 	return 0;
 }
 
