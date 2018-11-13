@@ -30,7 +30,7 @@ public:
 	GraphSolver(Graph* G, Graph* H): _G(G), _H(H) {}
 	~GraphSolver() {}
 
-	Graph* solve(vector<int>* g, vector<int>* h);
-	Graph * approxSolve(vector<int>* g, vector<int>* h);
+	Graph* solve(vector<size_t>* g, vector<size_t>* h);
+	Graph * approxSolve(vector<size_t>* g, vector<size_t>* h);
 };
 

@@ -123,12 +123,14 @@
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="SolutionVisualizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphSolver.h" />
     <ClInclude Include="CsvReader.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="SolutionVisualizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

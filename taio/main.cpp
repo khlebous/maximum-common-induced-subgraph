@@ -6,11 +6,11 @@
 #include "CsvReader.h"
 #include "Parser.h"
 #include "GraphSolver.h"
+#include "SolutionVisualizer.h"
+#include <iostream>
+#include <Windows.h>
 
 using namespace std;
-
-void printDuration(std::chrono::duration<double> elapsed);
-void printSequences(vector<int> X, vector<int> Y);
 
 const string exNr = "1";
 
@@ -43,24 +43,24 @@ int main(int argc, char* argv[])
 	Graph* graphH = parser.parseToGraph(dataH);
 
 	GraphSolver solver = GraphSolver(graphG, graphH);
+	SolutionVisualizer sw;
 
-	vector<int> g;
-	vector<int> h;
+	vector<size_t> g;
+	vector<size_t> h;
 
 	cout << "Exact algorithm:" << endl;
 	auto start = std::chrono::high_resolution_clock::now();
 	Graph* exactResult = solver.solve(&g, &h);
 	auto finish = std::chrono::high_resolution_clock::now();
-	printDuration(finish - start);
-	printSequences(g, h);
+	sw.visualize(graphG, graphH, &g, &h, finish - start);
 	delete exactResult;
+
 
 	cout << "Approximate algorithm:" << endl;
 	start = std::chrono::high_resolution_clock::now();
 	Graph* approxResult = solver.approxSolve(&g, &h);
 	finish = std::chrono::high_resolution_clock::now();
-	printDuration(finish - start);
-	printSequences(g, h);
+	sw.visualize(graphG, graphH, &g, &h, finish - start);
 	delete approxResult;
 
 	delete graphG;
@@ -68,29 +68,4 @@ int main(int argc, char* argv[])
 
 	system("pause");
 	return 0;
-}
-
-void printDuration(std::chrono::duration<double> elapsed) {
-	std::cout << "Elapsed time: " << elapsed.count() << " s\n";
-}
-
-void printSequences(vector<int> X, vector<int> Y)
-{
-	cout << "X=(";
-	for (auto& v : X)
-	{
-		cout << v;
-		if (v != X.back())
-			cout << " , ";
-	}
-	cout << ")" << endl;
-
-	cout << "Y=(";
-	for (auto& v : Y)
-	{
-		cout << v;
-		if (v != Y.back())
-			cout << " , ";
-	}
-	cout << ")" << endl << endl;
 }
