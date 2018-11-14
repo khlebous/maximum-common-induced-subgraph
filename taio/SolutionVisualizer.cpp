@@ -1,7 +1,10 @@
-#include "Graph.h"
 #include <iostream>
 #include <chrono>
+#include <iomanip>
+
+#include "Graph.h"
 #include "SolutionVisualizer.h"
+
 using namespace std;
 
 string SolutionVisualizer::toString(vector<size_t> * v)
@@ -20,65 +23,100 @@ string SolutionVisualizer::toString(vector<size_t> * v)
 
 void SolutionVisualizer::printGraphWithSubgraph(Graph* G, vector<size_t> * X)
 {
-	if (G->verticesCount() > maxGraph)
+	if (G->verticesCount() > maxGraphSize)
 		return;
 
+	int w = G->verticesCount() < 10 ? 2 : 3;
+
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	short white = 15;
-	short normal = 7;
-	short gray = 8;
+	int white = 15;
+	int normal = 7;
+	int gray = 8;
 
-	cout << "  ";
+	cout << setw(w) << " " << setw(w) << "|";
 
-	for (size_t j = 0; j < G->verticesCount(); j++)
+	SetConsoleTextAttribute(hConsole, white);
+	for (auto& v : *X)
 	{
-		if (contains(X, j))
-			SetConsoleTextAttribute(hConsole, white);
-		else
-			SetConsoleTextAttribute(hConsole, gray);
-
-		cout << j << " ";
+		cout << setw(w) << v;
 	}
 
+	SetConsoleTextAttribute(hConsole, gray);
+	for (size_t j = 0; j < G->verticesCount(); j++)
+	{
+		if (!contains(X, j))
+		{
+			cout << setw(w) << j;
+		}
+	}
+	SetConsoleTextAttribute(hConsole, normal);
 	cout << endl;
+
+	cout << string(2 * w - 1, '-') << "|" << string(1 + w * G->verticesCount(), '-') << endl;
+
+
+
+	for (auto& v : *X)
+	{
+		SetConsoleTextAttribute(hConsole, white);
+		cout << setw(w) << v;
+
+		SetConsoleTextAttribute(hConsole, normal);
+		cout << setw(w) << "|";
+
+		SetConsoleTextAttribute(hConsole, white);
+		for (auto& u : *X)
+		{
+			cout << setw(w) << G->edge(v, u);
+		}
+
+		SetConsoleTextAttribute(hConsole, gray);
+		for (size_t j = 0; j < G->verticesCount(); j++)
+		{
+			if (!contains(X, j))
+				cout << setw(w) << G->edge(v, j);
+		}
+		SetConsoleTextAttribute(hConsole, normal);
+		cout << endl;
+	}
 
 	for (size_t i = 0; i < G->verticesCount(); i++)
 	{
 		if (contains(X, i))
-			SetConsoleTextAttribute(hConsole, white);
-		else
-			SetConsoleTextAttribute(hConsole, gray);
+			continue;
 
-		cout << i << " ";
+		SetConsoleTextAttribute(hConsole, gray);
+		cout << setw(w) << i;
+
+		SetConsoleTextAttribute(hConsole, normal);
+		cout << setw(w) << "|";
+
+		SetConsoleTextAttribute(hConsole, gray);
+		for (auto& v : *X)
+		{
+			cout << setw(w) << G->edge(i, v);
+		}
 
 		for (size_t j = 0; j < G->verticesCount(); j++)
 		{
-
-			if (j != -1 && i != -1)
-			{
-				if (contains(X, i) && contains(X, j))
-					SetConsoleTextAttribute(hConsole, white);
-				else
-					SetConsoleTextAttribute(hConsole, gray);
-
-				cout << G->edge(i, j) << " ";
-			}
+			if (!contains(X, j))
+				cout << setw(w) << G->edge(i, j);
 		}
+		SetConsoleTextAttribute(hConsole, normal);
 		cout << endl;
 	}
 
-	SetConsoleTextAttribute(hConsole, normal);
 	cout << endl;
 }
 
-void SolutionVisualizer::printSubgraph(Graph* G, vector<size_t> * X)
+void SolutionVisualizer::printSubgraph()
 {
 	cout << "Subgraph:" << endl;
-	for (auto& i : *X)
+	for (auto& i : *_X)
 	{
-		for (auto& j : *X)
+		for (auto& j : *_X)
 		{
-			cout << G->edge(i, j) << " ";
+			cout << _G->edge(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -86,15 +124,15 @@ void SolutionVisualizer::printSubgraph(Graph* G, vector<size_t> * X)
 
 }
 
-void SolutionVisualizer::printTime(chrono::duration<double>  t)
+void SolutionVisualizer::printTime()
 {
-	cout << "Elapsed time: " << t.count() << " s" << endl << endl;
+	cout << "Elapsed time: " << _t.count() << " s" << endl << endl;
 }
 
-void SolutionVisualizer::printSequences(vector<size_t> * X, vector<size_t> * Y)
+void SolutionVisualizer::printSequences()
 {
-	cout << "X=" << toString(X) << endl;
-	cout << "Y=" << toString(Y) << endl;
+	cout << "X=" << toString(_X) << endl;
+	cout << "Y=" << toString(_Y) << endl;
 	cout << endl;
 }
 
@@ -103,24 +141,28 @@ bool SolutionVisualizer::contains(vector<size_t> * v, size_t el)
 	return find(v->begin(), v->end(), el) != v->end();
 }
 
-SolutionVisualizer::SolutionVisualizer()
+SolutionVisualizer::SolutionVisualizer(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, chrono::duration<double>  t)
 {
+	_G = G;
+	_H = H;
+	_X = X;
+	_Y = Y;
+	_t = t;
 }
-
 
 SolutionVisualizer::~SolutionVisualizer()
 {
 }
 
-void SolutionVisualizer::visualize(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, chrono::duration<double>  t)
+void SolutionVisualizer::visualize()
 {
-	printTime(t);
-	printSequences(X, Y);
-	printSubgraph(G, X);
+	printTime();
+	printSequences();
+	//printSubgraph();
 
 	cout << "Graph G:" << endl;
-	printGraphWithSubgraph(G, X);
+	printGraphWithSubgraph(_G, _X);
 
 	cout << "Graph H:" << endl;
-	printGraphWithSubgraph(H, Y);
+	printGraphWithSubgraph(_H, _Y);
 }

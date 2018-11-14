@@ -11,19 +11,26 @@ using namespace std;
 class SolutionVisualizer
 {
 private:
-	size_t maxGraph = 15;
+	size_t maxGraphSize = 15;
+	Graph* _G;
+	Graph* _H;
+	vector<size_t>* _X;
+	vector<size_t>* _Y;
+	chrono::duration<double> _t;
+
+
 	string toString(vector<size_t>* v);
 	void printGraphWithSubgraph(Graph* G, vector<size_t>* X);
-	void printSubgraph(Graph* G, vector<size_t>* X);
-	void printTime(chrono::duration<double>  t);
-	void printSequences(vector<size_t>* X, vector<size_t>* Y);
+	void printSubgraph();
+	void printTime();
+	void printSequences();
 	bool contains(vector<size_t> * v, size_t el);
 
 
 public:
-	SolutionVisualizer();
+	SolutionVisualizer(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, chrono::duration<double>  t);
 	~SolutionVisualizer();
 
-	void visualize(Graph* G, Graph* H, vector<size_t>* X, vector<size_t>* Y, chrono::duration<double> t);
+	void visualize();
 };
 

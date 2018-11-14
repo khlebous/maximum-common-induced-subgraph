@@ -36,8 +36,8 @@ namespace tests
 			Graph* graphG = new Graph(vertCount, eG);
 			Graph* graphH = new Graph(vertCount, eH);
 			GraphSolver solver = GraphSolver(graphG, graphH);
-			vector<int> g;
-			vector<int> h;
+			vector<size_t> g;
+			vector<size_t> h;
 			Graph* gR = solver.solve(&g, &h);
 
 			Assert::AreEqual(vertCount, gR->verticesCount());
@@ -75,8 +75,8 @@ namespace tests
 			Graph* graphG = new Graph(5, eG);
 			Graph* graphH = new Graph(6, eH);
 			GraphSolver solver = GraphSolver(graphG, graphH);
-			vector<int> g;
-			vector<int> h;
+			vector<size_t> g;
+			vector<size_t> h;
 			Graph* gR = solver.solve(&g, &h);
 
 			Assert::AreEqual((size_t)2, gR->verticesCount());

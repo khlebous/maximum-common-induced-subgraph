@@ -9,6 +9,7 @@
 #include "SolutionVisualizer.h"
 #include <iostream>
 #include <Windows.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -43,7 +44,6 @@ int main(int argc, char* argv[])
 	Graph* graphH = parser.parseToGraph(dataH);
 
 	GraphSolver solver = GraphSolver(graphG, graphH);
-	SolutionVisualizer sw;
 
 	vector<size_t> g;
 	vector<size_t> h;
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 	auto start = std::chrono::high_resolution_clock::now();
 	Graph* exactResult = solver.solve(&g, &h);
 	auto finish = std::chrono::high_resolution_clock::now();
-	sw.visualize(graphG, graphH, &g, &h, finish - start);
+	SolutionVisualizer(graphG, graphH, &g, &h, finish - start).visualize();
 	delete exactResult;
 
 
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 	start = std::chrono::high_resolution_clock::now();
 	Graph* approxResult = solver.approxSolve(&g, &h);
 	finish = std::chrono::high_resolution_clock::now();
-	sw.visualize(graphG, graphH, &g, &h, finish - start);
+	SolutionVisualizer(graphG, graphH, &g, &h, finish - start).visualize();
 	delete approxResult;
 
 	delete graphG;
