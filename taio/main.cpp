@@ -8,6 +8,7 @@
 #include "GraphSolver.h"
 #include "GraphGenerator.h"
 #include "SolutionVisualizer.h"
+#include "Experiment.h"
 #include <iostream>
 #include <Windows.h>
 #include <iomanip>
@@ -18,6 +19,12 @@ const string exNr = "1";
 
 int main(int argc, char* argv[])
 {
+	Experiment ex;
+	vector<double> results;
+	ex.RunExact(&results, &GraphGenerator::genTree, 7, 1);
+	system("pause");
+	return 0;
+
 	string pathH = "CSVs/ex" + exNr + "_g.csv";
 	string pathG = "CSVs/ex" + exNr + "_h.csv";
 	if (argc == 3)
@@ -50,18 +57,15 @@ int main(int argc, char* argv[])
 	vector<size_t> h;
 
 	cout << "Exact algorithm:" << endl;
-	auto start = std::chrono::high_resolution_clock::now();
-	Graph* exactResult = solver.solve(&g, &h);
-	auto finish = std::chrono::high_resolution_clock::now();
-	SolutionVisualizer(graphG, graphH, &g, &h, finish - start).visualize();
+	double time;
+	Graph* exactResult = solver.solve(&g, &h, &time);
+	SolutionVisualizer(graphG, graphH, &g, &h, time).visualize();
 	delete exactResult;
 
 
 	cout << "Approximate algorithm:" << endl;
-	start = std::chrono::high_resolution_clock::now();
-	Graph* approxResult = solver.approxSolve(&g, &h);
-	finish = std::chrono::high_resolution_clock::now();
-	SolutionVisualizer(graphG, graphH, &g, &h, finish - start).visualize();
+	Graph* approxResult = solver.approxSolve(&g, &h, &time);
+	SolutionVisualizer(graphG, graphH, &g, &h, time).visualize();
 	delete approxResult;
 
 	delete graphG;
