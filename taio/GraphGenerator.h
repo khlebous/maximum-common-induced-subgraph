@@ -14,7 +14,6 @@ private:
 	mt19937 _mt;
 	uniform_real_distribution<double> _dist;
 	double _sparseGraphDensity = 0.2;
-	double _normalGraphDensity = 0.5;
 	double _tightGraphDensity = 0.8;
 
 	double random();

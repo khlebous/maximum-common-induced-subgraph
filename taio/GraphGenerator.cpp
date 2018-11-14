@@ -45,7 +45,7 @@ Graph * GraphGenerator::genEmptyGraph(size_t graphSize)
 
 Graph * GraphGenerator::genGraph(size_t size)
 {
-	return genGraph(size, _normalGraphDensity);
+	return genGraph(size, random());
 }
 
 Graph * GraphGenerator::genTree(size_t size)
