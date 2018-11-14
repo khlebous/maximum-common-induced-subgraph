@@ -6,6 +6,7 @@
 #include "CsvReader.h"
 #include "Parser.h"
 #include "GraphSolver.h"
+#include "GraphGenerator.h"
 #include "SolutionVisualizer.h"
 #include <iostream>
 #include <Windows.h>
@@ -17,6 +18,13 @@ const string exNr = "1";
 
 int main(int argc, char* argv[])
 {
+	GraphGenerator gg(123);
+
+	auto tree = gg.genTree(5);
+	tree->print();
+
+	system("pause");
+	return 0;
 	string pathH = "CSVs/ex" + exNr + "_g.csv";
 	string pathG = "CSVs/ex" + exNr + "_h.csv";
 	if (argc == 3)

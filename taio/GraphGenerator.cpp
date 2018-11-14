@@ -33,9 +33,14 @@ Graph * GraphGenerator::genEmptyGraph(size_t graphSize)
 	for (size_t i = 1; i < graphSize; i++)
 	{
 		edges[i - 1] = new bool[i];
+
+		for (size_t j = 0; j < i; j++)
+			edges[i - 1][j] = false;
 	}
 
 	Graph* empty = new Graph(graphSize, edges);
+
+	empty->print();
 
 	return empty;
 }
@@ -52,33 +57,24 @@ Graph * GraphGenerator::genTree(size_t size)
 
 	auto randomInt = [&](int max) { return (int)(_dist(_mt) * max); };
 
-	bool* added = new bool[size];
-
-	vector<size_t> verts1;
+	vector<size_t> added;
+	vector<size_t> toAdd;
 	for (size_t i = 0; i < size; i++)
 	{
-		verts1.push_back(i);
+		toAdd.push_back(i);
 	}
-	vector<size_t> verts2 = verts1;
+	random_shuffle(toAdd.begin(), toAdd.end(), randomInt);
 
-
-	random_shuffle(verts1.begin(), verts1.end(), randomInt);
-	for (auto& a : verts1)
+	added.push_back(toAdd.back());
+	toAdd.pop_back();
+	
+	for (auto& v : toAdd)
 	{
-		random_shuffle(verts2.begin(), verts2.end(), randomInt);
-		for (auto& b : verts2)
-		{
-			if (a != b && (!added[a] || ! added[b]))
-			{
-				added[a] = true;
-				added[b] = true;
-				g->setEdge(a, b, true);
-				break;
-			}
-		}
+		random_shuffle(added.begin(), added.end(), randomInt);
+		size_t w = added.back();
+		g->setEdge(w, v, true);
+		added.push_back(v);
 	}
-
-	delete added;
 
 	return g;
 }
@@ -112,6 +108,11 @@ double GraphGenerator::random()
 {
 	return _dist(_mt);
 }
+
+//int GraphGenerator::randomInt(int min, int max)
+//{
+//	return (int)(_dist(_mt) * max + min);
+//}
 
 Graph * GraphGenerator::genGraph(size_t size, double density)
 {
