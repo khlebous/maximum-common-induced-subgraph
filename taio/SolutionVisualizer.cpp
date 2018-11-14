@@ -126,7 +126,7 @@ void SolutionVisualizer::printSubgraph()
 
 void SolutionVisualizer::printTime()
 {
-	cout << "Elapsed time: " << _t.count() << " s" << endl << endl;
+	cout << "Elapsed time: " << _t << " s" << endl << endl;
 }
 
 void SolutionVisualizer::printSequences()
@@ -141,7 +141,7 @@ bool SolutionVisualizer::contains(vector<size_t> * v, size_t el)
 	return find(v->begin(), v->end(), el) != v->end();
 }
 
-SolutionVisualizer::SolutionVisualizer(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, chrono::duration<double>  t)
+SolutionVisualizer::SolutionVisualizer(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, double  t)
 {
 	_G = G;
 	_H = H;

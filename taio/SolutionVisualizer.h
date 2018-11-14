@@ -16,7 +16,7 @@ private:
 	Graph* _H;
 	vector<size_t>* _X;
 	vector<size_t>* _Y;
-	chrono::duration<double> _t;
+	double _t;
 
 
 	string toString(vector<size_t>* v);
@@ -28,7 +28,7 @@ private:
 
 
 public:
-	SolutionVisualizer(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, chrono::duration<double>  t);
+	SolutionVisualizer(Graph* G, Graph* H, vector<size_t> * X, vector<size_t> * Y, double  t);
 	~SolutionVisualizer();
 
 	void visualize();

@@ -1,10 +1,13 @@
 #include <iostream>
 #include <algorithm>
+#include <chrono>
 #include "GraphSolver.h"
 using namespace std;
 
-Graph* GraphSolver::solve(vector<size_t>* g, vector<size_t>* h)
+Graph* GraphSolver::solve(vector<size_t>* g, vector<size_t>* h, double* time)
 {
+	auto start = std::chrono::high_resolution_clock::now();
+
 	init();
 
 	size_t n = _G->verticesCount();
@@ -15,6 +18,9 @@ Graph* GraphSolver::solve(vector<size_t>* g, vector<size_t>* h)
 		X.pop_back();
 	}
 
+	auto finish = std::chrono::high_resolution_clock::now();
+	*time = ((chrono::duration<double>) (finish - start)).count();
+
 	sortMaxSequences();
 	g->assign(Xmax.begin(), Xmax.end());
 	h->assign(Ymax.begin(), Ymax.end());
@@ -23,7 +29,7 @@ Graph* GraphSolver::solve(vector<size_t>* g, vector<size_t>* h)
 	return result;
 }
 
-void GraphSolver::solveXNode() 
+void GraphSolver::solveXNode()
 {
 	size_t n = _H->verticesCount();
 	for (size_t i = 0; i < n; i++)
@@ -41,7 +47,7 @@ void GraphSolver::solveXNode()
 	}
 }
 
-void GraphSolver::solveYNode() 
+void GraphSolver::solveYNode()
 {
 	size_t n = _G->verticesCount();
 	for (size_t i = 0; i < n; i++)
@@ -57,8 +63,10 @@ void GraphSolver::solveYNode()
 	}
 }
 
-Graph * GraphSolver::approxSolve(vector<size_t>* g, vector<size_t>* h)
+Graph * GraphSolver::approxSolve(vector<size_t>* g, vector<size_t>* h, double* time)
 {
+	auto start = std::chrono::high_resolution_clock::now();
+
 	init();
 	size_t n = _G->verticesCount();
 	size_t m = _H->verticesCount();
@@ -77,6 +85,9 @@ Graph * GraphSolver::approxSolve(vector<size_t>* g, vector<size_t>* h)
 		}
 		X.pop_back();
 	}
+
+	auto finish = std::chrono::high_resolution_clock::now();
+	*time = ((chrono::duration<double>) (finish - start)).count();
 
 	sortMaxSequences();
 	g->assign(Xmax.begin(), Xmax.end());
@@ -227,7 +238,7 @@ void GraphSolver::sortMaxSequences()
 	{
 		for (size_t j = 0; j < m - i - 1; j++)
 		{
-			if (Xmax[j] > Xmax[j+1])
+			if (Xmax[j] > Xmax[j + 1])
 			{
 				swap(Xmax[j], Xmax[j + 1]);
 				swap(Ymax[j], Ymax[j + 1]);
