@@ -3,7 +3,7 @@
 #include "GraphSolver.h"
 using namespace std;
 
-Graph* GraphSolver::solve(vector<int>* g, vector<int>* h)
+Graph* GraphSolver::solve(vector<size_t>* g, vector<size_t>* h)
 {
 	init();
 
@@ -57,7 +57,7 @@ void GraphSolver::solveYNode()
 	}
 }
 
-Graph * GraphSolver::approxSolve(vector<int>* g, vector<int>* h)
+Graph * GraphSolver::approxSolve(vector<size_t>* g, vector<size_t>* h)
 {
 	init();
 	size_t n = _G->verticesCount();
@@ -176,7 +176,7 @@ bool GraphSolver::checkConnectivity(size_t x)
 	return false;
 }
 
-bool GraphSolver::contains(vector<size_t> v, size_t el) 
+bool GraphSolver::contains(vector<size_t> v, size_t el)
 {
 	return find(v.begin(), v.end(), el) != v.end();
 }
