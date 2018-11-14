@@ -20,8 +20,10 @@ int main(int argc, char* argv[])
 {
 	GraphGenerator gg(123);
 
-	auto tree = gg.genTree(5);
-	tree->print();
+	gg.genTree(10)->print();
+	gg.genTightGraph(10)->print();
+	gg.genGraph(10)->print();
+	gg.genSparseGraph(10)->print();
 
 	system("pause");
 	return 0;

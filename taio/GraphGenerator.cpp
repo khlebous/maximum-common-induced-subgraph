@@ -40,8 +40,6 @@ Graph * GraphGenerator::genEmptyGraph(size_t graphSize)
 
 	Graph* empty = new Graph(graphSize, edges);
 
-	empty->print();
-
 	return empty;
 }
 
@@ -67,7 +65,7 @@ Graph * GraphGenerator::genTree(size_t size)
 
 	added.push_back(toAdd.back());
 	toAdd.pop_back();
-	
+
 	for (auto& v : toAdd)
 	{
 		random_shuffle(added.begin(), added.end(), randomInt);
@@ -109,21 +107,16 @@ double GraphGenerator::random()
 	return _dist(_mt);
 }
 
-//int GraphGenerator::randomInt(int min, int max)
-//{
-//	return (int)(_dist(_mt) * max + min);
-//}
-
 Graph * GraphGenerator::genGraph(size_t size, double density)
 {
 	double chance = chanceEdgeTree(size, density);
-	Graph* g = genEmptyGraph(size);
+	Graph* g = genTree(size);
 
 	for (size_t i = 0; i < size; i++)
 	{
 		for (size_t j = 0; j < i; j++)
 		{
-			if (random() < chance)
+			if (!g->edge(i, j) && random() < chance)
 				g->setEdge(i, j, true);
 		}
 	}
