@@ -21,6 +21,17 @@ bool Graph::edge(size_t i, size_t j)
 	return i < j ? edges[j - 1][i] : edges[i - 1][j];
 }
 
+void Graph::setEdge(size_t i, size_t j, bool value)
+{
+	if (i >= vertCount || j >= vertCount || i == j)
+		throw invalid_argument("invalid edge index");
+
+	if (i < j)
+		swap(i, j);
+
+	edges[i - 1][j] = value;
+}
+
 void Graph::print()
 {
 	cout << "Vertices count: " << vertCount << endl;

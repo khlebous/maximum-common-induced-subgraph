@@ -6,6 +6,7 @@
 #include "CsvReader.h"
 #include "Parser.h"
 #include "GraphSolver.h"
+#include "GraphGenerator.h"
 #include "SolutionVisualizer.h"
 #include <iostream>
 #include <Windows.h>
