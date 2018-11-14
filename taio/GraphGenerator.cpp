@@ -43,7 +43,6 @@ Graph * GraphGenerator::genEmptyGraph(size_t graphSize)
 	return empty;
 }
 
-
 Graph * GraphGenerator::genGraph(size_t size)
 {
 	return genGraph(size, _normalGraphDensity);

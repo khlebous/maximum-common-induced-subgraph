@@ -18,15 +18,6 @@ const string exNr = "1";
 
 int main(int argc, char* argv[])
 {
-	GraphGenerator gg(123);
-
-	gg.genTree(10)->print();
-	gg.genTightGraph(10)->print();
-	gg.genGraph(10)->print();
-	gg.genSparseGraph(10)->print();
-
-	system("pause");
-	return 0;
 	string pathH = "CSVs/ex" + exNr + "_g.csv";
 	string pathG = "CSVs/ex" + exNr + "_h.csv";
 	if (argc == 3)
