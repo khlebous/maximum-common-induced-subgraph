@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GraphGenerator.cpp" />
     <ClCompile Include="GraphSolver.cpp" />
     <ClCompile Include="CsvReader.cpp" />
     <ClCompile Include="Graph.cpp" />
@@ -126,6 +127,7 @@
     <ClCompile Include="SolutionVisualizer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GraphGenerator.h" />
     <ClInclude Include="GraphSolver.h" />
     <ClInclude Include="CsvReader.h" />
     <ClInclude Include="Graph.h" />
