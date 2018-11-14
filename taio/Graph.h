@@ -13,6 +13,7 @@ public:
 
 	size_t verticesCount() { return vertCount; }
 	bool edge(size_t i, size_t j);
+	void setEdge(size_t i, size_t j, bool value);
 	void print();
 	void printEdges();
 };
