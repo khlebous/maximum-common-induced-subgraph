@@ -15,22 +15,40 @@
 
 using namespace std;
 
-const string exNr = "1";
-
 int main(int argc, char* argv[])
 {
-	Experiment ex;
-	vector<double> results;
-	ex.RunExact(&results, &GraphGenerator::genTree, &GraphGenerator::genTree, 7, 1);
-	system("pause");
-	return 0;
+	bool runExact = true;
+	bool runAprox = true;
 
-	string pathH = "CSVs/ex" + exNr + "_g.csv";
-	string pathG = "CSVs/ex" + exNr + "_h.csv";
+	string pathH = "";
+	string pathG = "";
+
+	if (argc < 3 || argc > 4)
+	{
+		cout << "Wrong args" << endl;
+		return 0;
+	}
+
 	if (argc == 3)
 	{
 		pathG = argv[1];
 		pathH = argv[2];
+	}
+
+	if (argc == 4)
+	{
+		pathG = argv[1];
+		pathH = argv[2];
+
+		if (strcmp(argv[3], "-e") == 0)
+		{
+			runAprox = false;
+		}
+
+		if (strcmp(argv[3], "-a") == 0)
+		{
+			runExact = false;
+		}
 	}
 
 	Parser parser = Parser();
@@ -55,22 +73,32 @@ int main(int argc, char* argv[])
 
 	vector<size_t> g;
 	vector<size_t> h;
-
-	cout << "Exact algorithm:" << endl;
 	double time;
-	Graph* exactResult = solver.solve(&g, &h, &time);
-	SolutionVisualizer(graphG, graphH, &g, &h, time).visualize();
-	delete exactResult;
 
+	if (runExact)
+	{
+		cout << endl << "Exact algorithm:" << endl;
+		Graph* exactResult = solver.solve(&g, &h, &time);
+		SolutionVisualizer(graphG, graphH, &g, &h, time).visualize();
+		delete exactResult;
+	}
 
-	cout << "Approximate algorithm:" << endl;
-	Graph* approxResult = solver.approxSolve(&g, &h, &time);
-	SolutionVisualizer(graphG, graphH, &g, &h, time).visualize();
-	delete approxResult;
+	if (runAprox)
+	{
+		cout << endl << "Approximate algorithm:" << endl;
+		Graph* approxResult = solver.approxSolve(&g, &h, &time);
+		SolutionVisualizer(graphG, graphH, &g, &h, time).visualize();
+		delete approxResult;
+	}
 
 	delete graphG;
 	delete graphH;
 
-	system("pause");
 	return 0;
 }
+
+//Experiment ex;
+//vector<double> results;
+//ex.RunExact(&results, &GraphGenerator::genTree, &GraphGenerator::genTree, 7, 1);
+//system("pause");
+//return 0;

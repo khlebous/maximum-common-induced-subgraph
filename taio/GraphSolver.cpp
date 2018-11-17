@@ -165,7 +165,7 @@ bool GraphSolver::updateMaxSequences()
 bool GraphSolver::checkAdjecencyMatrices(size_t y)
 {
 	size_t n = X.size();
-	int x = X[n - 1]; //last added x; |X| = |Y| + 1
+	size_t x = X[n - 1]; //last added x; |X| = |Y| + 1
 
 	for (size_t i = 0; i < n - 1; i++)
 	{
