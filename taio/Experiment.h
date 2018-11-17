@@ -6,14 +6,14 @@
 class Experiment
 {
 private:
-	void Run(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFunc) (size_t), int maxSize, int numberPerSize, unsigned int seed, bool exact);
+	void Run(vector<double> * averageTimes, Graph *(GraphGenerator::* generateFuncG)(size_t), Graph * (GraphGenerator::*generateFuncH) (size_t), int maxSize, int numberPerSize, unsigned int seed, bool exact);
 
 
 public:
 	Experiment();
 	~Experiment();
 
-	void RunExact(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFunc) (size_t), int maxSize = 10, int numberPerSize = 5, unsigned int seed = 0);
-	void RunAprox(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFunc) (size_t), int maxSize = 10, int numberPerSize = 5, unsigned int seed = 0);
+	void RunExact(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFuncG) (size_t), Graph * (GraphGenerator::*generateFuncH) (size_t), int maxSize = 10, int numberPerSize = 5, unsigned int seed = 0);
+	void RunAprox(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFuncG) (size_t), Graph * (GraphGenerator::*generateFuncH) (size_t), int maxSize = 10, int numberPerSize = 5, unsigned int seed = 0);
 };
 

@@ -12,7 +12,7 @@ Experiment::~Experiment()
 {
 }
 
-void Experiment::Run(vector<double>* averageTimes, Graph *(GraphGenerator::* generateFunc)(size_t), int maxSize, int numberPerSize, unsigned int seed, bool exact)
+void Experiment::Run(vector<double>* averageTimes, Graph *(GraphGenerator::* generateFuncG)(size_t), Graph * (GraphGenerator::*generateFuncH) (size_t), int maxSize, int numberPerSize, unsigned int seed, bool exact)
 {
 	averageTimes->clear();
 
@@ -23,8 +23,8 @@ void Experiment::Run(vector<double>* averageTimes, Graph *(GraphGenerator::* gen
 		vector<double> times;
 		for (size_t j = 0; j < numberPerSize; j++)
 		{
-			Graph * g = (gg.*generateFunc)(i);
-			Graph * h = (gg.*generateFunc)(i);
+			Graph * g = (gg.*generateFuncG)(i);
+			Graph * h = (gg.*generateFuncH)(i);
 
 			vector<size_t> x;
 			vector<size_t> y;
@@ -49,13 +49,13 @@ void Experiment::Run(vector<double>* averageTimes, Graph *(GraphGenerator::* gen
 	}
 }
 
-void Experiment::RunExact(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFunc) (size_t), int maxSize, int numberPerSize, unsigned int seed)
+void Experiment::RunExact(vector<double> * averageTimes, Graph * (GraphGenerator::*generateFuncG) (size_t), Graph * (GraphGenerator::*generateFuncH) (size_t), int maxSize, int numberPerSize, unsigned int seed)
 {
-	Run(averageTimes, generateFunc, maxSize, numberPerSize, seed, true);
+	Run(averageTimes, generateFuncG, generateFuncH, maxSize, numberPerSize, seed, true);
 }
 
-void Experiment::RunAprox(vector<double>* averageTimes, Graph *(GraphGenerator::* generateFunc)(size_t), int maxSize, int numberPerSize, unsigned int seed)
+void Experiment::RunAprox(vector<double>* averageTimes, Graph *(GraphGenerator::* generateFuncG)(size_t), Graph * (GraphGenerator::*generateFuncH) (size_t), int maxSize, int numberPerSize, unsigned int seed)
 {
-	Run(averageTimes, generateFunc, maxSize, numberPerSize, seed, false);
+	Run(averageTimes, generateFuncG, generateFuncH, maxSize, numberPerSize, seed, false);
 }
 

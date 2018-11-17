@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 {
 	Experiment ex;
 	vector<double> results;
-	ex.RunExact(&results, &GraphGenerator::genTree, 7, 1);
+	ex.RunExact(&results, &GraphGenerator::genTree, &GraphGenerator::genTree, 7, 1);
 	system("pause");
 	return 0;
 
