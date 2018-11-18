@@ -20,8 +20,8 @@ int main(int argc, char* argv[])
 	bool runExact = true;
 	bool runAprox = true;
 
-	string pathH = "";
 	string pathG = "";
+	string pathH = "";
 
 	if (argc < 3 || argc > 4)
 	{

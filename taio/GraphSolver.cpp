@@ -202,7 +202,7 @@ Graph* GraphSolver::getMaxSubGraph()
 		edges[i - 1] = new bool[i];
 
 		for (size_t j = 0; j < i; j++)
-			edges[i - 1][j] = _G->edge(Xmax[i], Ymax[i]);
+			edges[i - 1][j] = _G->edge(Xmax[i], Xmax[j]);
 	}
 
 	return new Graph(vertCount, edges);
