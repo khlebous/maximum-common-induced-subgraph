@@ -5,6 +5,33 @@
 
 using namespace std;
 
+istream& safeGetline(istream& is, string& t)
+{
+	t.clear();
+
+	istream::sentry se(is, true);
+	streambuf* sb = is.rdbuf();
+	
+	for (;;) {
+		int c = sb->sbumpc();
+		switch (c) {
+		case '\n':
+			return is;
+		case '\r':
+			if (sb->sgetc() == '\n')
+				sb->sbumpc();
+			return is;
+		case streambuf::traits_type::eof():
+			// Also handle the case when the last line has no line ending
+			if (t.empty())
+				is.setstate(ios::eofbit);
+			return is;
+		default:
+			t += (char)c;
+		}
+	}
+}
+
 vector<vector<string>> CsvReader::getData()
 {
 	vector<vector<string> > dataList;
@@ -12,7 +39,7 @@ vector<vector<string>> CsvReader::getData()
 	ifstream file(fileName);
 	string line = "";
 
-	while (getline(file, line))
+	while (!safeGetline(file, line).eof())
 	{
 		vector<string> vec = split(line);
 		dataList.push_back(vec);
