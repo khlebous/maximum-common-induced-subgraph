@@ -94,6 +94,7 @@ int main(int argc, char* argv[])
 	delete graphG;
 	delete graphH;
 
+	system("pause");
 	return 0;
 }
 
